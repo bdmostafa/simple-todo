@@ -3,7 +3,7 @@ const addBtn = document.querySelector('.add-btn');
 const displaySection = document.querySelector('.display-section');
 
 const Todo = {
-    createDiv: function (itemName) {
+    displayTodo: function (itemName) {
         let itemCard = document.createElement('div');
         itemCard.classList.add('item');
 
@@ -25,7 +25,38 @@ const Todo = {
         itemCard.appendChild(input);
         itemCard.appendChild(editBtn);
         itemCard.appendChild(removeBtn);
+
+        editBtn.addEventListener('click', () => {
+            this.editTodo(input);
+        });
+
+
+        removeBtn.addEventListener('click', () => {
+            this.removeCard(itemCard)
+        });
+    },
+
+    editTodo: function (input) {
+        input.disabled = !input.disabled;
+    },
+
+    removeCard: function (itemCard) {
+        displaySection.removeChild(itemCard);
     }
 }
 
-Todo.createDiv('Item 1')
+function addTodo() {
+    if (addItem.value != '') {
+        Todo.displayTodo(addItem.value);
+        addItem.value = '';
+    }
+}
+
+addBtn.addEventListener('click', addTodo);
+
+// event.which == 13 is for Enter key press from keyboard
+window.addEventListener('keydown', (event) => {
+    if (event.which == 13) {
+        addTodo();
+    }
+});
